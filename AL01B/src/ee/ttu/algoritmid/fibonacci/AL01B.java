@@ -23,8 +23,8 @@ public class AL01B {
         BigDecimal finalNanoSeconds = duration.multiply(lines).divide(iterativeF(5), 10, RoundingMode.HALF_EVEN);
 
         BigDecimal durationInSeconds = finalNanoSeconds.divide(BigDecimal.valueOf(1000000000),10, RoundingMode.HALF_EVEN);
-        BigDecimal durationInMonths = durationInSeconds.divide(BigDecimal.valueOf(2628288), 10, RoundingMode.HALF_EVEN);
-        BigDecimal durationInYears = durationInMonths.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_EVEN);
+        BigDecimal durationInDays = durationInSeconds.divide(BigDecimal.valueOf(86400), 10, RoundingMode.HALF_EVEN);
+        BigDecimal durationInYears = durationInDays.divide(BigDecimal.valueOf(365), 10, RoundingMode.HALF_EVEN);
 
         return durationInYears.toString();
     }
