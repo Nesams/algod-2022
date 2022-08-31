@@ -6,7 +6,10 @@ public class AL01A {
      * @param n The number of the sequence to compute.
      * @return The n-th number in Fibonacci series.
      */
-    public String iterativeF(int n) {
+    public static String iterativeF(int n) {
+        if(n <= 1) {
+            return Integer.toString(n);
+        }
         int a = 1, b = 1, c;
         for (int i = 2; i <= n; i++) {
             c = a + b;
@@ -14,5 +17,9 @@ public class AL01A {
             b = c;
         }
         return Integer.toString(a);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(iterativeF(0));
     }
 }
