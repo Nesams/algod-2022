@@ -25,8 +25,9 @@ public class AL01B {
         BigDecimal durationInSeconds = finalNanoSeconds.divide(BigDecimal.valueOf(1000000000),10, RoundingMode.HALF_EVEN);
         BigDecimal durationInDays = durationInSeconds.divide(BigDecimal.valueOf(86400), 10, RoundingMode.HALF_EVEN);
         BigDecimal durationInYears = durationInDays.divide(BigDecimal.valueOf(365), 10, RoundingMode.HALF_EVEN);
+        BigDecimal finalDuration = durationInYears.divide(BigDecimal.valueOf(1000), 10, RoundingMode.HALF_EVEN);
 
-        return durationInYears.toString();
+        return finalDuration.toString();
     }
 
     public static BigDecimal iterativeF(int n) {
@@ -56,6 +57,6 @@ public class AL01B {
     }
 
     public static void main(String[] args) {
-        System.out.println(timeToComputeRecursiveFibonacci(12));
+        System.out.println(timeToComputeRecursiveFibonacci(50));
     }
 }
