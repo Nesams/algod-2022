@@ -11,14 +11,14 @@ public class AL01B {
      * @param n The n-th number  to compute.
      * @return The time estimate or exact time in YEARS.
      */
-    public String timeToComputeRecursiveFibonacci(int n) {
-        Instant start = Instant.now();
+    public static String timeToComputeRecursiveFibonacci(int n) {
+        long start = System.currentTimeMillis();
         recursiveF(n);
-        Instant end = Instant.now();
+        long end = System.currentTimeMillis();
 
-        Duration duration = Duration.between(start, end);
+        long duration = end - start;
 
-        long durationInYears = duration.toMillis() / (1000L * 60 * 60 * 24 * 365);
+        long durationInYears = duration / (1000L * 60 * 60 * 24 * 365);
 
         return Long.toString(durationInYears);
     }
@@ -29,9 +29,13 @@ public class AL01B {
      * @param n The n-th number to compute.
      * @return The n-th Fibonacci number as a string.
      */
-    public BigInteger recursiveF(int n) { 
+    public static BigInteger recursiveF(int n) {
         if (n <= 1)
             return BigInteger.valueOf(n);
         return recursiveF(n - 1).add(recursiveF(n - 2));
+    }
+
+    public static void main(String[] args) {
+        System.out.println(timeToComputeRecursiveFibonacci(50));
     }
 }
