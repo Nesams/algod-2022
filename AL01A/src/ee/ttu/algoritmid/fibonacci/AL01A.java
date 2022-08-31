@@ -1,5 +1,7 @@
 package ee.ttu.algoritmid.fibonacci;
 
+import java.math.BigInteger;
+
 public class AL01A {
     /**
      * Compute the Fibonacci sequence number.
@@ -10,13 +12,13 @@ public class AL01A {
         if(n <= 1) {
             return Integer.toString(n);
         }
-        int a = 1, b = 1, c;
+        BigInteger a = BigInteger.ONE, b = BigInteger.ONE, c;
         for (int i = 2; i <= n; i++) {
-            c = a + b;
+            c = a.add(b);
             a = b;
             b = c;
         }
-        return Integer.toString(a);
+        return a.toString();
     }
 
     public static void main(String[] args) {
