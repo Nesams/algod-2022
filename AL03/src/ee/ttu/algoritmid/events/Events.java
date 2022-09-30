@@ -40,12 +40,16 @@ public class Events {
 //        for (Map.Entry<Integer, Integer> arrayL : arrayList) {
 //        sortedMap.put(arrayL.getKey(), arrayL.getValue());
 //    }
-        List<Map.Entry<Integer, Integer>> sortedList = eventParticipants.entrySet().stream()
-                .sorted((k1, k2) -> -k1.getValue().compareTo(k2.getValue())).toList();
-        int firstValue = sortedList.get(sortedList.size() - 1).getValue();
-        int secondValue = sortedList.get(sortedList.size() - 2).getValue();
+        if (eventParticipants.size() >= 2) {
+            List<Map.Entry<Integer, Integer>> sortedList = eventParticipants.entrySet().stream()
+                    .sorted((k1, k2) -> -k1.getValue().compareTo(k2.getValue())).toList();
+            int firstValue = sortedList.get(sortedList.size() - 1).getValue();
+            int secondValue = sortedList.get(sortedList.size() - 2).getValue();
 
-        return List.of(firstValue, secondValue);
+            return List.of(firstValue, secondValue);
+        } else {
+            return (List<Integer>) eventParticipants.values();
+        }
     }
 }
 
