@@ -5,12 +5,17 @@ import java.util.*;
 
 public class Events {
 
-    private HashMap<Integer, Integer> eventParticipants = new HashMap<>(leftSpots);
+    private HashMap<Integer, Integer> eventParticipants;
     private static int leftSpots;
 
     public Events(int maxParticipants) {
-         leftSpots = maxParticipants;
-
+        leftSpots = maxParticipants;
+        if (maxParticipants > 0) {
+            eventParticipants = new HashMap<>(leftSpots);
+        }
+        else {
+            eventParticipants = new HashMap<>(0);
+        }
     }
 
     public static int getLeftSpots() {
