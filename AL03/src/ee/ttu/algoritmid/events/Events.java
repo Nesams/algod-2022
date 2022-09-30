@@ -18,12 +18,13 @@ public class Events {
     }
 
     public void registerParticipant(String eventName, int eventLengthMinutes, boolean freeTickets) {
-        int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
-        if (eventParticipants.containsKey(event)) {
-            eventParticipants.put(event, eventParticipants.get(event) + 1);
-            leftSpots -= 1;
-        } else {
-            eventParticipants.putIfAbsent(event, 1);
+        if (leftSpots != 0) {
+            int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
+            if (eventParticipants.containsKey(event)) {
+                eventParticipants.put(event, eventParticipants.get(event) + 1);
+            } else {
+                eventParticipants.putIfAbsent(event, 1);
+            }
             leftSpots -= 1;
         }
     }
