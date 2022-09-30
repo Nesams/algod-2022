@@ -7,6 +7,7 @@ public class Events {
 
     private HashMap<Integer, Integer> eventParticipants;
     private static int leftSpots;
+    private static int spotsCounter = 0;
 
     public Events(int maxParticipants) {
         leftSpots = maxParticipants;
@@ -18,15 +19,13 @@ public class Events {
         }
     }
 
-    public static int getLeftSpots() {
-        return leftSpots;
-    }
-
     public void registerParticipant(String eventName, int eventLengthMinutes, boolean freeTickets) {
-        int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
-        eventParticipants.putIfAbsent(event, 0);
-        eventParticipants.put(event, eventParticipants.get(event) + 1);
-        leftSpots -= 1;
+        if (spotsCounter < leftSpots) {
+            int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
+            eventParticipants.putIfAbsent(event, 0);
+            eventParticipants.put(event, eventParticipants.get(event) + 1);
+            spotsCounter += 1;
+        }
     }
 
     public int eventPopularity(String eventName, int eventLengthMinutes, boolean freeTickets) {
@@ -51,7 +50,7 @@ public class Events {
             int firstValue = sortedList.get(sortedList.size() - 1).getValue();
             int secondValue = sortedList.get(sortedList.size() - 2).getValue();
 
-            return List.of(firstValue, secondValue);
+            return List.of(secondValue, firstValue);
         } else {
             List<Map.Entry<Integer, Integer>> sortedList = eventParticipants.entrySet().stream().toList();
             return Collections.singletonList(sortedList.get(sortedList.size() - 1).getValue());
