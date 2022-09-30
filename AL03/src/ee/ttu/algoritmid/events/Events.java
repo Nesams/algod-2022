@@ -51,10 +51,10 @@ public class Events {
         if (eventParticipants.size() >= 2) {
             List<Map.Entry<Integer, Integer>> sortedList = eventParticipants.entrySet().stream()
                     .sorted((k1, k2) -> -k1.getValue().compareTo(k2.getValue())).toList();
-            int firstValue = sortedList.get(sortedList.size() - 1).getValue();
-            int secondValue = sortedList.get(sortedList.size() - 2).getValue();
+            int firstValue = sortedList.get(0).getValue();
+            int secondValue = sortedList.get(1).getValue();
 
-            return List.of(secondValue, firstValue);
+            return List.of(firstValue, secondValue);
         } else {
             List<Map.Entry<Integer, Integer>> sortedList = eventParticipants.entrySet().stream().toList();
             return Collections.singletonList(sortedList.get(sortedList.size() - 1).getValue());
@@ -63,9 +63,10 @@ public class Events {
     public static void main(String[] args) {
         Events events1 = new Events(30);
         int event1 = Objects.hash("YES", 30, false);
-        //events1.registerParticipant("YES", 30, false);
+        events1.registerParticipant("YES", 30, false);
         events1.registerParticipant("Yes", 40, false);
         events1.registerParticipant("Yes", 40, false);
+        events1.registerParticipant("No", 21, true);
         System.out.println(events1.getEventParticipants());
         System.out.println(events1.eventPopularity("YES", 30, false));
         System.out.println(events1.getTop1Participants());
