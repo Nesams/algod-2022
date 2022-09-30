@@ -39,17 +39,18 @@ public class Events {
     }
 
     public List<Integer> getTop2Participants() {
-        ArrayList<Map.Entry<Integer, Integer>> arrayList = new ArrayList<>(eventParticipants.entrySet());
-        arrayList.sort((o1, o2) -> (o1.getValue()).compareTo(o2.getValue()));
-    HashMap<Integer, Integer> sortedMap = new LinkedHashMap<Integer, Integer>();
-        for (Map.Entry<Integer, Integer> arrayL : arrayList) {
-        sortedMap.put(arrayL.getKey(), arrayL.getValue());
-    }
-        Optional<Integer> firstKey = sortedMap.keySet().stream().findFirst();
-        sortedMap.remove(firstKey);
-        Optional<Integer> secondKey = sortedMap.keySet().stream().findFirst();
+//        ArrayList<Map.Entry<Integer, Integer>> arrayList = new ArrayList<>(eventParticipants.entrySet());
+//        arrayList.sort((o1, o2) -> (o1.getValue()).compareTo(o2.getValue()));
+//    HashMap<Integer, Integer> sortedMap = new LinkedHashMap<Integer, Integer>();
+//        for (Map.Entry<Integer, Integer> arrayL : arrayList) {
+//        sortedMap.put(arrayL.getKey(), arrayL.getValue());
+//    }
+        List<Map.Entry<Integer, Integer>> sortedList = eventParticipants.entrySet().stream()
+                .sorted((k1, k2) -> -k1.getValue().compareTo(k2.getValue())).toList();
+        int firstValue = sortedList.get(sortedList.size() - 1).getValue();
+        int secondValue = sortedList.get(sortedList.size() - 2).getValue();
 
-        return List.of(sortedMap.get(firstKey), sortedMap.get(secondKey));
+        return List.of(firstValue, secondValue);
     }
 }
 
