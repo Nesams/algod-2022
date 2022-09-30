@@ -53,7 +53,8 @@ public class Events {
 
             return List.of(firstValue, secondValue);
         } else {
-            return (List<Integer>) eventParticipants.values();
+            List<Map.Entry<Integer, Integer>> sortedList = eventParticipants.entrySet().stream().toList();
+            return Collections.singletonList(sortedList.get(sortedList.size() - 1).getValue());
         }
     }
 }
