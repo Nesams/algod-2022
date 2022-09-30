@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Events {
 
-    private HashMap<Integer, Integer> eventParticipants = new HashMap<>();
+    private HashMap<Integer, Integer> eventParticipants = new HashMap<>(leftSpots);
     private static int leftSpots;
 
     public Events(int maxParticipants) {
