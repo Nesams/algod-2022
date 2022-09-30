@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Events {
 
-    private HashMap<Integer, Integer> eventParticipants;
+    private final HashMap<Integer, Integer> eventParticipants;
     private static int leftSpots;
     private static int spotsCounter = 0;
 
@@ -19,6 +19,10 @@ public class Events {
         }
     }
 
+    public HashMap<Integer, Integer> getEventParticipants() {
+        return eventParticipants;
+    }
+
     public void registerParticipant(String eventName, int eventLengthMinutes, boolean freeTickets) {
         if (spotsCounter < leftSpots) {
             int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
@@ -30,7 +34,10 @@ public class Events {
 
     public int eventPopularity(String eventName, int eventLengthMinutes, boolean freeTickets) {
         int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
-        return eventParticipants.get(event);
+        if (eventParticipants.containsKey(event)) {
+            return eventParticipants.get(event);
+        }
+        return 0;
     }
 
     public int getTop1Participants() {
@@ -56,5 +63,18 @@ public class Events {
             return Collections.singletonList(sortedList.get(sortedList.size() - 1).getValue());
         }
     }
+    public static void main(String[] args) {
+        Events events1 = new Events(30);
+        int event1 = Objects.hash("YES", 30, false);
+        //events1.registerParticipant("YES", 30, false);
+        events1.registerParticipant("Yes", 40, false);
+        events1.registerParticipant("Yes", 40, false);
+        System.out.println(events1.getEventParticipants());
+        System.out.println(events1.eventPopularity("YES", 30, false));
+        System.out.println(events1.getTop1Participants());
+        System.out.println(events1.getTop2Participants());
+    }
 }
+
+
 
