@@ -7,6 +7,9 @@ public class Events {
 
     private final HashMap<Integer, Integer> eventParticipants;
     private static int leftSpots;
+    private final HashMap<Integer, Integer> topMap;
+    int top1 = 0;
+    int top2 = 0;
 
     public Events(int maxParticipants) {
         leftSpots = maxParticipants;
@@ -16,17 +19,44 @@ public class Events {
         else {
             eventParticipants = new HashMap<>(0);
         }
+        this.topMap = new HashMap<Integer, Integer>(2);
+        this.top1 = 0;
+        this.top2 = 0;
+        topMap.put(top1, 0); //(registered, eventHash)
+        topMap.put(top2, 1); //(registered, eventHash)
     }
 
     public HashMap<Integer, Integer> getEventParticipants() {
         return eventParticipants;
     }
 
+    private void top1Top2(int event, int howManyRegistered) {
+        if (howManyRegistered > top1) {
+            if (topMap.get(top1).equals(event)) {
+                topMap.remove(top1);
+                topMap.put(howManyRegistered, event);
+            } else {
+                topMap.remove(top2);
+                topMap.put(howManyRegistered, event);
+                top2 = top1;
+            }
+            top1 = howManyRegistered;
+        } else if (howManyRegistered > top2) {
+            topMap.remove(top2);
+            topMap.put(howManyRegistered, event);
+            top2 = howManyRegistered;
+        }
+    }
+
+
     public void registerParticipant(String eventName, int eventLengthMinutes, boolean freeTickets) {
         int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
-        eventParticipants.putIfAbsent(event, 0);
-        eventParticipants.put(event, eventParticipants.get(event) + 1);
-        leftSpots -= 1;
+        if (eventParticipants.containsKey(event)) {
+            eventParticipants.put(event, eventParticipants.get(event) + 1);
+            top1Top2(event, eventParticipants.get(event));
+        } else
+            eventParticipants.putIfAbsent(event, 1);
+            top1Top2(event, 1);
     }
 
     public int eventPopularity(String eventName, int eventLengthMinutes, boolean freeTickets) {
@@ -38,31 +68,14 @@ public class Events {
     }
 
     public int getTop1Participants() {
-        return Collections.max(eventParticipants.values());
+        return top1;
     }
 
     public List<Integer> getTop2Participants() {
-//        ArrayList<Map.Entry<Integer, Integer>> arrayList = new ArrayList<>(eventParticipants.entrySet());
-//        arrayList.sort((o1, o2) -> (o1.getValue()).compareTo(o2.getValue()));
-//    HashMap<Integer, Integer> sortedMap = new LinkedHashMap<Integer, Integer>();
-//        for (Map.Entry<Integer, Integer> arrayL : arrayList) {
-//        sortedMap.put(arrayL.getKey(), arrayL.getValue());
-//    }
-        if (eventParticipants.size() >= 2) {
-            List<Map.Entry<Integer, Integer>> sortedList = eventParticipants.entrySet().stream()
-                    .sorted((k1, k2) -> -k1.getValue().compareTo(k2.getValue())).toList();
-            int firstValue = sortedList.get(0).getValue();
-            int secondValue = sortedList.get(1).getValue();
-
-            return List.of(firstValue, secondValue);
-        } else {
-            List<Map.Entry<Integer, Integer>> sortedList = eventParticipants.entrySet().stream().toList();
-            return Collections.singletonList(sortedList.get(0).getValue());
-        }
+        return List.of(top1, top2);
     }
     public static void main(String[] args) {
         Events events1 = new Events(30);
-        int event1 = Objects.hash("YES", 30, false);
         events1.registerParticipant("YES", 30, false);
         events1.registerParticipant("Yes", 40, false);
         events1.registerParticipant("Yes", 40, false);
