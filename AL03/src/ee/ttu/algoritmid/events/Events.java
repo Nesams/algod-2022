@@ -7,7 +7,6 @@ public class Events {
 
     private final HashMap<Integer, Integer> eventParticipants;
     private static int leftSpots;
-    private static int spotsCounter = 0;
 
     public Events(int maxParticipants) {
         leftSpots = maxParticipants;
@@ -24,12 +23,10 @@ public class Events {
     }
 
     public void registerParticipant(String eventName, int eventLengthMinutes, boolean freeTickets) {
-        if (spotsCounter < leftSpots) {
-            int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
-            eventParticipants.putIfAbsent(event, 0);
-            eventParticipants.put(event, eventParticipants.get(event) + 1);
-            spotsCounter += 1;
-        }
+        int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
+        eventParticipants.putIfAbsent(event, 0);
+        eventParticipants.put(event, eventParticipants.get(event) + 1);
+        leftSpots -= 1;
     }
 
     public int eventPopularity(String eventName, int eventLengthMinutes, boolean freeTickets) {
