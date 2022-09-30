@@ -18,15 +18,10 @@ public class Events {
     }
 
     public void registerParticipant(String eventName, int eventLengthMinutes, boolean freeTickets) {
-        if (leftSpots != 0) {
-            int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
-            if (eventParticipants.containsKey(event)) {
-                eventParticipants.put(event, eventParticipants.get(event) + 1);
-            } else {
-                eventParticipants.putIfAbsent(event, 1);
-            }
-            leftSpots -= 1;
-        }
+        int event = Objects.hash(eventName, eventLengthMinutes, freeTickets);
+        eventParticipants.putIfAbsent(event, 0);
+        eventParticipants.put(event, eventParticipants.get(event) + 1);
+        leftSpots -= 1;
     }
 
     public int eventPopularity(String eventName, int eventLengthMinutes, boolean freeTickets) {
